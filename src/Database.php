@@ -86,6 +86,8 @@ SQL;
             return;
         }
 
+        $this->assertPostgresDriverAvailable();
+
         try {
             $this->connectWithRetries($this->primaryUrl);
             $this->activeUrl = $this->primaryUrl;
@@ -99,6 +101,21 @@ SQL;
         }
 
         $this->initializeSchema();
+    }
+
+    private function assertPostgresDriverAvailable(): void
+    {
+        if (!extension_loaded('pdo')) {
+            throw new \RuntimeException(
+                'PDO extension is not loaded. Ensure your runtime has ext-pdo enabled.',
+            );
+        }
+
+        if (!in_array('pgsql', PDO::getAvailableDrivers(), true)) {
+            throw new \RuntimeException(
+                'PostgreSQL PDO driver is missing (pdo_pgsql). Railway/Railpack: set RAILPACK_PHP_EXTENSIONS=pdo_pgsql,pgsql and redeploy.',
+            );
+        }
     }
 
     public function close(): void

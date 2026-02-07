@@ -10,6 +10,13 @@ php app.php
 
 `.env` loyiha root papkasidan (`CineHubX_PHP/.env`) o'qiladi.
 
+## Railway deploy eslatma
+
+PostgreSQL bilan ishlashi uchun `pdo_pgsql` drayveri kerak.
+
+- `composer.json` ichida `ext-pdo_pgsql` borligini saqlang.
+- Railway Variables ga `RAILPACK_PHP_EXTENSIONS=pdo_pgsql,pgsql` qo'shib, qayta deploy qiling.
+
 ## Qo'shilgan asosiy funksiyalar
 
 - `/start` (deep-link: `content_...`, `dlp_...`)
