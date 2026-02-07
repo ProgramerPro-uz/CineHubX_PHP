@@ -15,7 +15,7 @@ require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/TelegramApi.php';
 require_once __DIR__ . '/src/BotApp.php';
 
-$projectRoot = dirname(__DIR__);
+$projectRoot = __DIR__;
 
 $config = Config::load($projectRoot);
 $db = new Database($config->databaseUrl, $config->databaseFallbackUrl);

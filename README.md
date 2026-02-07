@@ -5,7 +5,7 @@ Bu papkada Python botning PHP versiyasi joylashtirildi. Python fayllar o'zgartir
 ## Ishga tushirish
 
 ```bash
-php "php bot/app.php"
+php app.php
 ```
 
 `.env` root papkadan (`CineHubX/.env`) o'qiladi.
