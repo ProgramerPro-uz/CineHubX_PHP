@@ -1,0 +1,12 @@
+{
+  "name": "cinehubx/php-bot",
+  "description": "CineHubX Telegram bot (PHP)",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-pgsql": "*"
+  }
+}

@@ -148,11 +148,35 @@ SQL;
                 if ($attempt >= $retries) {
                     throw $e;
                 }
-                error_log(sprintf('Database connection failed (%s). Retrying in %.1fs (%d/%d)', $url, $backoff, $attempt, $retries));
+                $safeUrl = $this->sanitizeDatabaseUrlForLog($url);
+                error_log(sprintf('Database connection failed (%s). Retrying in %.1fs (%d/%d)', $safeUrl, $backoff, $attempt, $retries));
                 usleep((int) ($backoff * 1_000_000));
                 $backoff = min($backoff * 2, $maxBackoff);
             }
         }
+    }
+
+    private function sanitizeDatabaseUrlForLog(string $url): string
+    {
+        if (str_starts_with($url, 'pgsql:')) {
+            return 'pgsql:(redacted)';
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false) {
+            return '(invalid database url)';
+        }
+
+        $scheme = isset($parts['scheme']) ? (string) $parts['scheme'] : 'postgresql';
+        $host = isset($parts['host']) ? (string) $parts['host'] : 'unknown-host';
+        $port = isset($parts['port']) ? ':' . (int) $parts['port'] : '';
+        $dbName = isset($parts['path']) ? ltrim((string) $parts['path'], '/') : '';
+
+        if ($dbName === '') {
+            return sprintf('%s://%s%s', $scheme, $host, $port);
+        }
+
+        return sprintf('%s://%s%s/%s', $scheme, $host, $port, $dbName);
     }
 
     private function createPdo(string $url): PDO

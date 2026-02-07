@@ -8,7 +8,7 @@ Bu papkada Python botning PHP versiyasi joylashtirildi. Python fayllar o'zgartir
 php app.php
 ```
 
-`.env` root papkadan (`CineHubX/.env`) o'qiladi.
+`.env` loyiha root papkasidan (`CineHubX_PHP/.env`) o'qiladi.
 
 ## Qo'shilgan asosiy funksiyalar
 
